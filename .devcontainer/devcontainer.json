@@ -1,0 +1,7 @@
+{
+    "dockerFile": "Dockerfile",
+    "extensions": [
+        "ms-vscode.csharp",
+        "rust-lang.rust"
+    ]
+}

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="wasmtime" Version="0.12.0-preview1" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cargo wasi build --release"
+          WorkingDirectory="$([System.IO.Path]::Combine($(ProjectDir),&quot;../wasm-lib&quot;))"
+        />
+    <Copy SourceFiles="$([System.IO.Path]::Combine($(ProjectDir),&quot;../wasm-lib/target/wasm32-wasi/release/wasmlib.wasm&quot;))"
+          DestinationFolder="$(ProjectDir)"
+        />
+    <ItemGroup>
+      <EmbeddedResource Include="wasmlib.wasm" />
+    </ItemGroup>
+  </Target>
+
+</Project>
